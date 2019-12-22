@@ -18,4 +18,11 @@ PRIMARY KEY (id),
 FOREIGN KEY (department_id) REFERENCES departments(id)
 );
 
-
+create table employees (
+id int auto_increment,
+first_name varchar(30),
+last_name varchar(30),
+role_id int,
+PRIMARY KEY (id),
+FOREIGN KEY (role_id) REFERENCES roles(id)
+);
