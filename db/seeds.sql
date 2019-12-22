@@ -13,6 +13,7 @@ INSERT INTO roles (title, salary, department_id) VALUES ('HR Lead', 75000, 2);
 
 INSERT INTO roles (title, salary, department_id) VALUES ('CFO', 92000, 3);
 INSERT INTO roles (title, salary, department_id) VALUES ('CEO', 130000, 3);
+INSERT INTO roles (title, salary, department_id) VALUES ('manager', 80000, 3);
 
 INSERT INTO roles (title, salary, department_id) VALUES ('Tech', 54000, 4);
 INSERT INTO roles (title, salary, department_id) VALUES ('Tech lead', 55000, 4);
