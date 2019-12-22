@@ -139,4 +139,122 @@ connection.connect(function(err) {
       console.table("All Roles: ", res);
     });
   };
-  
+  //adding the add function to add new employees, dept, and role to the tables.
+  addEmployee = () => {
+    let queryString = 'SELECT r.id AS roleId, r.title FROM roles r';
+    connection.query(queryString, function(err, res){
+      if(err) throw err;
+      inquirer.prompt([
+    {
+      name: 'first_name',
+      type: 'input',
+      message: 'Employee first name'
+    },{
+      name: 'last_name',
+      type: 'input',
+      message: 'Employee last name: '
+    }, {
+      name: 'role',
+      type:'rawlist',
+      choices: function() {
+        let roles = [];
+        for (let i = 0; i < res.length; i++){
+          roles.push(res[i].title)
+        }
+        return roles;
+      },
+      message: "Choose role: "
+    }
+      ]).then(function(answers){
+        let rId;
+        for (let j = 0; j < res.length; j++) {
+          if (res[j].title === answers.role) {
+            rId = res[j].roleId;
+            console.log(res[j].roleId);
+          }
+        }
+    
+        connection.query('insert into employees set ?',
+        {
+          first_name: answers.first_name,
+          last_name: answers.last_name,
+          role_id: rId
+        },
+        function(err, res){
+          if (err) throw err;
+          console.log(res.affectedRows + " employee added!\n");
+        }
+        )
+      });
+    });
+  };
+  addRole = () => {
+    let queryString = 'SELECT d.name, d.id AS deptId FROM departments d';
+    connection.query(queryString, function(err, res){
+      if(err) throw err;
+      inquirer.prompt([
+    {
+      name: 'role_name',
+      type: 'input',
+      message: 'Role name: '
+    },{
+      name: 'salary',
+      type: 'input',
+      message: 'Salary: '
+    }, {
+      name: 'department',
+      type:'rawlist',
+      choices: function() {
+        let departments = [];
+        for (let i = 0; i < res.length; i++){
+          departments.push(res[i].name)
+        }
+        return departments;
+      },
+      message: "Choose department: "
+    }
+      ]).then(function(answers){
+        let dId;
+        for (let j = 0; j < res.length; j++) {
+          if (res[j].name === answers.department) {
+            dId = res[j].deptId;
+          }
+        }
+    
+        connection.query('insert into roles set ?',
+        {
+          title: answers.role_name,
+          salary: answers.salary,
+          department_id: dId
+        },
+        function(err, res){
+          if (err) throw err;
+          console.log(res.affectedRows + " role added!\n");
+        }
+        )
+      });
+    });
+  };
+  addDepartment = () => {
+    let queryString = 'SELECT d.name, d.id AS deptId FROM departments d';
+    connection.query(queryString, function(err, res){
+      if(err) throw err;
+      inquirer.prompt(
+        {
+      name: 'department_name',
+      type: 'input',
+      message: 'Department name: '
+    }).then(function(answers){
+        connection.query('insert into departments set ?',
+        {
+          name: answers.department_name
+        },
+        function(err, res){
+          if (err) throw err;
+          console.log(res.affectedRows + " department added!\n");
+        }
+        )
+      });
+    });
+  };
+    
