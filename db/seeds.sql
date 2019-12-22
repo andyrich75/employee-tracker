@@ -1,5 +1,5 @@
 INSERT INTO departments (name) VALUES ('Sales');
-INSERT INTO departments (name) VALUES ('HR')
+INSERT INTO departments (name) VALUES ('HR');
 INSERT INTO departments (name) VALUES ('Management');
 INSERT INTO departments (name) VALUES ('Technicians');
 
